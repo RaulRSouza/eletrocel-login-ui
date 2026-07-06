@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { LoginPage } from "@/components/LoginPage";
 
@@ -12,10 +12,7 @@ export const Route = createFileRoute("/")({
           "Acesse o sistema de gestão da Eletrocel: celulares, acessórios e assistência técnica.",
       },
       { property: "og:title", content: "Eletrocel — Entrar" },
-      {
-        property: "og:description",
-        content: "Login do sistema de gestão da Eletrocel.",
-      },
+      { property: "og:description", content: "Login do sistema de gestão da Eletrocel." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -24,6 +21,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,9 +29,9 @@ function Index() {
     setError(null);
     setIsLoading(true);
     try {
-      await new Promise((r) => setTimeout(r, 900));
+      await new Promise((r) => setTimeout(r, 700));
       if (email === "admin@eletrocel.com" && password === "admin123") {
-        setError(null);
+        navigate({ to: "/dashboard" });
       } else {
         setError("Credenciais inválidas. Verifique seu e-mail e senha.");
       }
