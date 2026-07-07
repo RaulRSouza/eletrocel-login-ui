@@ -98,30 +98,37 @@ export function SubmitButton({
   children,
   loadingLabel,
   delay = 0.32,
+  disabled = false,
 }: {
   isLoading: boolean;
   children: React.ReactNode;
   loadingLabel: string;
   delay?: number;
+  disabled?: boolean;
 }) {
+  const isDisabled = isLoading || disabled;
   return (
     <motion.button
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.4 }}
-      whileTap={{ scale: 0.985 }}
+      whileTap={{ scale: isDisabled ? 1 : 0.985 }}
       type="submit"
-      disabled={isLoading}
+      disabled={isDisabled}
+      aria-busy={isLoading}
+      aria-disabled={isDisabled}
       className="mt-2 flex w-full items-center justify-center gap-2 rounded-full py-3 text-sm font-semibold text-slate-950 transition-[transform,box-shadow] duration-200 hover:shadow-[0_0_0_4px_rgba(250,204,21,0.12)] focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
       style={{ background: SUN }}
     >
       {isLoading ? (
         <>
           <span
+            role="status"
+            aria-label={loadingLabel}
             className="h-4 w-4 animate-spin rounded-full border-2 border-slate-950/30 border-t-slate-950"
-            aria-hidden
           />
-          {loadingLabel}
+          <span aria-hidden>{loadingLabel}</span>
+          <span className="sr-only">{loadingLabel}…</span>
         </>
       ) : (
         children
@@ -129,3 +136,4 @@ export function SubmitButton({
     </motion.button>
   );
 }
+

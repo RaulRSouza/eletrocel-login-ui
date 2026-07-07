@@ -104,9 +104,14 @@ export function LoginPage({ onSubmit, isLoading, error }: LoginPageProps) {
           )}
         </AnimatePresence>
 
-        <SubmitButton isLoading={isLoading} loadingLabel="Entrando">
+        <SubmitButton
+          isLoading={isLoading}
+          loadingLabel="Entrando"
+          disabled={email.trim().length === 0 || password.length === 0}
+        >
           Entrar
         </SubmitButton>
+
 
         <motion.div
           initial={{ opacity: 0 }}

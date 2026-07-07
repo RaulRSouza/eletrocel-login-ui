@@ -29,7 +29,18 @@ export function AppHeader() {
     };
   }, []);
 
-  const handleLogout = () => navigate({ to: "/" });
+  const handleLogout = () => {
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.removeItem("eletrocel:session");
+        window.sessionStorage.removeItem("eletrocel:session");
+      } catch {
+        /* ignore storage errors */
+      }
+    }
+    navigate({ to: "/", replace: true });
+  };
+
 
   return (
     <header className="sticky top-0 z-30 border-b border-white/5 bg-[#0a0e1a]/85 backdrop-blur-xl">
@@ -77,12 +88,15 @@ export function AppHeader() {
 
           <button
             onClick={handleLogout}
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-slate-950 transition-transform hover:scale-[1.02]"
+            type="button"
+            aria-label="Sair da sessão"
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-slate-950 transition-transform hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300/60"
             style={{ background: `linear-gradient(135deg, #fef08a, ${SUN})` }}
           >
-            <LogOut className="h-3.5 w-3.5" />
+            <LogOut className="h-3.5 w-3.5" aria-hidden />
             Sair
           </button>
+
         </div>
       </div>
     </header>
