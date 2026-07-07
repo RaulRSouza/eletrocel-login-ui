@@ -29,7 +29,18 @@ export function AppHeader() {
     };
   }, []);
 
-  const handleLogout = () => navigate({ to: "/" });
+  const handleLogout = () => {
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.removeItem("eletrocel:session");
+        window.sessionStorage.removeItem("eletrocel:session");
+      } catch {
+        /* ignore storage errors */
+      }
+    }
+    navigate({ to: "/", replace: true });
+  };
+
 
   return (
     <header className="sticky top-0 z-30 border-b border-white/5 bg-[#0a0e1a]/85 backdrop-blur-xl">
