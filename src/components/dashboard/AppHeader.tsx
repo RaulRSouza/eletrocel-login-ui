@@ -88,12 +88,15 @@ export function AppHeader() {
 
           <button
             onClick={handleLogout}
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-slate-950 transition-transform hover:scale-[1.02]"
+            type="button"
+            aria-label="Sair da sessão"
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-slate-950 transition-transform hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300/60"
             style={{ background: `linear-gradient(135deg, #fef08a, ${SUN})` }}
           >
-            <LogOut className="h-3.5 w-3.5" />
+            <LogOut className="h-3.5 w-3.5" aria-hidden />
             Sair
           </button>
+
         </div>
       </div>
     </header>
